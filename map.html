@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script type="text/javascript" src="http://map.vworld.kr/js/vworldMapInit.js.do?version=2.0&apiKey=6685D69F-9F28-3247-B4DE-1E5F5F267A1B"></script>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.3/build/ol.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.3/css/ol.css">
+
+    <style>
+      .contents_filter {
+        display: block;
+        width: auto;
+        height: 100%;
+        z-index: 10;
+        position: absolute;
+        left: 0px;
+        background-color: white;
+        border: 1px solid gray;
+      }
+      .contents_search {
+        border-bottom: 1px solid #93918f;
+        background-color: #616161;
+        box-sizing: border-box;
+        text-align: center;
+        padding: 15px;
+        top: 0px;
+      }
+      .contents_filter li {
+        padding: 10px;
+        border-bottom: 1px solid gray;
+      }
+      .contents_filter.open {
+        left: -100px;
+      }
+      #search_input, #search_btn {
+        border-radius: 5px;
+        padding: 5px;
+      }
+
+      /* 맵 */
+      #real_map {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+      }
+
+      /* 스위치 */
+      .switch {
+          display: inline-block;
+          width: 30px;
+          height: 16px;
+          background-color: #CBCDCA;
+          border: 1px solid #E0DED8;
+          box-sizing: border-box;
+          border-radius: 50px;
+          position: relative;
+          vertical-align: top;
+          margin-top: -16px;
+          transition: All .4s cubic-bezier(.215, .61, .355, 1);
+          -webkit-transition: All .4s cubic-bezier(.215, .61, .355, 1);
+          -moz-transition: All .4s cubic-bezier(.215, .61, .355, 1);
+          -o-transition: All .4s cubic-bezier(.215, .61, .355, 1);
+          float: right;
+      }
+      .switch::after {
+          content: "";
+          display: block;
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          background-color: #fff;
+          box-sizing: border-box;
+          position: absolute;
+          top: -1px;
+          left: 0;
+          box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+          transition: All .4s cubic-bezier(.215, .61, .355, 1);
+          -webkit-transition: All .4s cubic-bezier(.215, .61, .355, 1);
+          -moz-transition: All .4s cubic-bezier(.215, .61, .355, 1);
+          -o-transition: All .4s cubic-bezier(.215, .61, .355, 1)
+      }
+      input[type=checkbox]:checked+label .switch {
+          background-color: #6FC5A1;
+      }
+
+      input[type=checkbox]:checked+label .switch::after {
+          left: 18px;
+      }
+      input[type=checkbox] {
+          display: none;
+      }
+      #location {
+        position: relative;
+        float: right;
+        z-index: 11;
+        width: 30px;
+        height: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div class="contents_filter">
+        <div class="contents_search">
+          <input type="text" placeholder="지역을 입력하세요." id="search_input">
+          <input type="button" value="click!" id="search_btn" onclick="
+          document.querySelector('.contents_filter').style.left = '-100px'">
+        </div>
+        <div class="toggle_wrap">
+          <ul>
+            <li>
+              <input type="checkbox" id="checkbox1">
+              <label for="checkbox1">
+                <p>서울</p>
+                <div class="switch"></div>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="checkbox2">
+              <label for="checkbox2">
+                <p>수원</p>
+                <div class="switch"></div>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="checkbox3">
+              <label for="checkbox3">
+                <p>제주</p>
+                <div class="switch"></div>
+              </label>
+            </li>
+            <li>
+              <input type="checkbox" id="checkbox4">
+              <label for="checkbox4">
+                <p>구미</p>
+                <div class="switch"></div>
+              </label>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div id="location">
+        <input type="button" value="위치">
+      </div>
+      <div id="real_map"></div>
+    </div>
+    <script type="text/javascript" src="map.js?v=<%= System.currentTimeMillis()%>"></script>
+  </body>
+</html>
